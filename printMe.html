@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printing Indices</title>
+</head>
+<body>
+    <h1>hello there!!!</h1>
+    <p id="first-string"><em>This is your first index. Copy it. >>> </em></p> 
+    <button id="btn-first-string">copy the first string.</button>
+    <p id="second-string"><em>This is your second index. Copy it. >>> </em></p>
+    <button id="btn-second-string">copy the second string.</button> <br><br>
+    <button id="btn">press the button to start creating your printing ranges.</button>
+
+    <h2>Created by Tanvir Ibn Touhid</h2>
+</body>
+<script>
+  let first_indices = document.getElementById('first-string');
+  let second_indices = document.getElementById('second-string');
+  let btn = document.getElementById('btn');
+  let btn_first_string = document.getElementById("btn-first-string");
+  let btn_second_string = document.getElementById("btn-second-string");
+  let printing_index_array;
+
+  btn.addEventListener("click", ()=>{
+    let start_index = parseInt(window.prompt('enter the first page: '));
+    let end_index = parseInt(window.prompt("enter the last page: "));
+    let page_range = parseInt(window.prompt("Enter the page range: "));
+    printing_index_array = printNo(start_index, end_index, page_range);
+    first_indices.textContent = printing_index_array[0];
+    second_indices.textContent = printing_index_array[1]; 
+  })
+
+  btn_first_string.addEventListener("click", ()=>{
+    copyTheContent('first-string');
+  })
+  btn_second_string.addEventListener("click", ()=>{
+    copyTheContent('second-string');
+  })
+
+    function printNo(s, f, r) {
+        let first_string = "";
+        let second_string = "";
+        let first_word = "";
+        let second_word = "";
+        let first_letter;
+        let second_letter;
+        for (let i = 0; i <= f; i = i + r) {
+          if (i == 0) {
+            first_letter = s;
+            second_letter = s + r - 1;
+          } else {
+            first_letter = second_letter + r + 1;
+            second_letter = first_letter + r - 1;
+          }
+          first_word = `${first_letter}-${second_letter}, `;
+          if(!(second_letter>f)){
+              first_string += first_word;
+          }else{
+              break;
+          }
+        }
+      
+        for (let i = 0; i <= f; i = i + r) {
+          if (i == 0) {
+            first_letter = r + 1;
+            second_letter = first_letter + r-1;
+          } else {
+            first_letter += 2 * r;
+            second_letter += 2 * r;
+          }
+          second_word = `${first_letter}-${second_letter}, `;
+          if (!(second_letter > f)) {
+            second_string += second_word;
+          } else {
+            break;
+          }
+        }
+        return [first_string, second_string];
+      }
+      function copyTheContent(id)
+    {
+        var str = document.getElementById(id);
+        window.getSelection().selectAllChildren(str);
+        document.execCommand("Copy");
+        alert('copied')
+    }
+      
+</script>
+</html>
